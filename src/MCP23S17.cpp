@@ -1,30 +1,30 @@
 /*
  * Copyright (c) 2014-2021, Majenko Technologies
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification, 
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- * 
- *  1. Redistributions of source code must retain the above copyright notice, 
+ *
+ *  1. Redistributions of source code must retain the above copyright notice,
  *     this list of conditions and the following disclaimer.
- * 
+ *
  *  2. Redistributions in binary form must reproduce the above copyright notice,
  *     this list of conditions and the following disclaimer in the documentation
  *      and/or other materials provided with the distribution.
- * 
+ *
  *  3. Neither the name of Majenko Technologies nor the names of its contributors may be used
- *     to endorse or promote products derived from this software without 
+ *     to endorse or promote products derived from this software without
  *     specific prior written permission.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, 
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -37,76 +37,76 @@
  *  to use when communicating with the chip.  The third is the internal
  *  address number of the chip.  This is controlled by the three Ax pins
  *  on the chip.
- *  
+ *
  *  Example:
  *
  *      MCP23S17 myExpander(&SPI, 10, 0);
- * 
+ *
  */
 #ifdef __PIC32MX__
-MCP23S17::MCP23S17(DSPI *spi, uint8_t cs, uint8_t addr) {
+MCP23S17::MCP23S17(DSPI* spi, uint8_t cs, uint8_t addr) {
 #else
-MCP23S17::MCP23S17(SPIClass *spi, uint8_t cs, uint8_t addr) {
+MCP23S17::MCP23S17(SPIClass* spi, uint8_t cs, uint8_t addr) {
 #endif
-    _spi = spi;
-    _cs = cs;
-    _addr = addr;
+  _spi = spi;
+  _cs = cs;
+  _addr = addr;
 
-    _reg[MCP_IODIRA] = 0xFF;
-    _reg[MCP_IODIRB] = 0xFF;
-    _reg[MCP_IPOLA] = 0x00;
-    _reg[MCP_IPOLB] = 0x00;
-    _reg[MCP_GPINTENA] = 0x00;
-    _reg[MCP_GPINTENB] = 0x00;
-    _reg[MCP_DEFVALA] = 0x00;
-    _reg[MCP_DEFVALB] = 0x00;
-    _reg[MCP_INTCONA] = 0x00;
-    _reg[MCP_INTCONB] = 0x00;
-    _reg[MCP_IOCONA] = 0x18;
-    _reg[MCP_IOCONB] = 0x18;
-    _reg[MCP_GPPUA] = 0x00;
-    _reg[MCP_GPPUB] = 0x00;
-    _reg[MCP_INTFA] = 0x00;
-    _reg[MCP_INTFB] = 0x00;
-    _reg[MCP_INTCAPA] = 0x00;
-    _reg[MCP_INTCAPB] = 0x00;
-    _reg[MCP_GPIOA] = 0x00;
-    _reg[MCP_GPIOB] = 0x00;
-    _reg[MCP_OLATA] = 0x00;
-    _reg[MCP_OLATB] = 0x00;
+  _reg[MCP_IODIRA] = 0xFF;
+  _reg[MCP_IODIRB] = 0xFF;
+  _reg[MCP_IPOLA] = 0x00;
+  _reg[MCP_IPOLB] = 0x00;
+  _reg[MCP_GPINTENA] = 0x00;
+  _reg[MCP_GPINTENB] = 0x00;
+  _reg[MCP_DEFVALA] = 0x00;
+  _reg[MCP_DEFVALB] = 0x00;
+  _reg[MCP_INTCONA] = 0x00;
+  _reg[MCP_INTCONB] = 0x00;
+  _reg[MCP_IOCONA] = 0x18;
+  _reg[MCP_IOCONB] = 0x18;
+  _reg[MCP_GPPUA] = 0x00;
+  _reg[MCP_GPPUB] = 0x00;
+  _reg[MCP_INTFA] = 0x00;
+  _reg[MCP_INTFB] = 0x00;
+  _reg[MCP_INTCAPA] = 0x00;
+  _reg[MCP_INTCAPB] = 0x00;
+  _reg[MCP_GPIOA] = 0x00;
+  _reg[MCP_GPIOB] = 0x00;
+  _reg[MCP_OLATA] = 0x00;
+  _reg[MCP_OLATB] = 0x00;
 }
 
 #ifdef __PIC32MX__
-MCP23S17::MCP23S17(DSPI &spi, uint8_t cs, uint8_t addr) {
+MCP23S17::MCP23S17(DSPI& spi, uint8_t cs, uint8_t addr) {
 #else
-MCP23S17::MCP23S17(SPIClass &spi, uint8_t cs, uint8_t addr) {
+MCP23S17::MCP23S17(SPIClass& spi, uint8_t cs, uint8_t addr) {
 #endif
-    _spi = &spi;
-    _cs = cs;
-    _addr = addr;
+  _spi = &spi;
+  _cs = cs;
+  _addr = addr;
 
-    _reg[MCP_IODIRA] = 0xFF;
-    _reg[MCP_IODIRB] = 0xFF;
-    _reg[MCP_IPOLA] = 0x00;
-    _reg[MCP_IPOLB] = 0x00;
-    _reg[MCP_GPINTENA] = 0x00;
-    _reg[MCP_GPINTENB] = 0x00;
-    _reg[MCP_DEFVALA] = 0x00;
-    _reg[MCP_DEFVALB] = 0x00;
-    _reg[MCP_INTCONA] = 0x00;
-    _reg[MCP_INTCONB] = 0x00;
-    _reg[MCP_IOCONA] = 0x18;
-    _reg[MCP_IOCONB] = 0x18;
-    _reg[MCP_GPPUA] = 0x00;
-    _reg[MCP_GPPUB] = 0x00;
-    _reg[MCP_INTFA] = 0x00;
-    _reg[MCP_INTFB] = 0x00;
-    _reg[MCP_INTCAPA] = 0x00;
-    _reg[MCP_INTCAPB] = 0x00;
-    _reg[MCP_GPIOA] = 0x00;
-    _reg[MCP_GPIOB] = 0x00;
-    _reg[MCP_OLATA] = 0x00;
-    _reg[MCP_OLATB] = 0x00;
+  _reg[MCP_IODIRA] = 0xFF;
+  _reg[MCP_IODIRB] = 0xFF;
+  _reg[MCP_IPOLA] = 0x00;
+  _reg[MCP_IPOLB] = 0x00;
+  _reg[MCP_GPINTENA] = 0x00;
+  _reg[MCP_GPINTENB] = 0x00;
+  _reg[MCP_DEFVALA] = 0x00;
+  _reg[MCP_DEFVALB] = 0x00;
+  _reg[MCP_INTCONA] = 0x00;
+  _reg[MCP_INTCONB] = 0x00;
+  _reg[MCP_IOCONA] = 0x18;
+  _reg[MCP_IOCONB] = 0x18;
+  _reg[MCP_GPPUA] = 0x00;
+  _reg[MCP_GPPUB] = 0x00;
+  _reg[MCP_INTFA] = 0x00;
+  _reg[MCP_INTFB] = 0x00;
+  _reg[MCP_INTCAPA] = 0x00;
+  _reg[MCP_INTCAPB] = 0x00;
+  _reg[MCP_GPIOA] = 0x00;
+  _reg[MCP_GPIOB] = 0x00;
+  _reg[MCP_OLATA] = 0x00;
+  _reg[MCP_OLATB] = 0x00;
 }
 
 /*! The begin function performs the initial configuration of the IO expander chip.
@@ -120,60 +120,69 @@ MCP23S17::MCP23S17(SPIClass &spi, uint8_t cs, uint8_t addr) {
  *
  */
 void MCP23S17::begin() {
-    _spi->begin();
-    ::pinMode(_cs, OUTPUT);
-    ::digitalWrite(_cs, HIGH);
-    uint8_t cmd = 0b01000000;
-    ::digitalWrite(_cs, LOW);
-    _spi->transfer(cmd);
-    _spi->transfer(MCP_IOCONA);
-    _spi->transfer(0x18);
-    ::digitalWrite(_cs, HIGH);
-    writeAll();
+  _spi->begin();
+  ::pinMode(_cs, OUTPUT);
+  ::digitalWrite(_cs, HIGH);
+  uint8_t cmd = 0b01000000;
+  _spi->beginTransaction(spiSettings);
+  ::digitalWrite(_cs, LOW);
+  _spi->transfer(cmd);
+  _spi->transfer(MCP_IOCONA);
+  _spi->transfer(0x18);
+  ::digitalWrite(_cs, HIGH);
+  _spi->endTransaction();
+
+  writeAll();
 }
 
 /*! This private function reads a value from the specified register on the chip and
  *  stores it in the _reg array for later usage.
  */
 void MCP23S17::readRegister(uint8_t addr) {
-    if (addr > 21) {
-        return;
-    }
-    uint8_t cmd = 0b01000001 | ((_addr & 0b111) << 1);
-    ::digitalWrite(_cs, LOW);
-    _spi->transfer(cmd);
-    _spi->transfer(addr);
-    _reg[addr] = _spi->transfer(0xFF);
-    ::digitalWrite(_cs, HIGH);
+  if (addr > 21) {
+    return;
+  }
+  uint8_t cmd = 0b01000001 | ((_addr & 0b111) << 1);
+  _spi->beginTransaction(spiSettings);
+  ::digitalWrite(_cs, LOW);
+  _spi->transfer(cmd);
+  _spi->transfer(addr);
+  _reg[addr] = _spi->transfer(0xFF);
+  ::digitalWrite(_cs, HIGH);
+  _spi->endTransaction();
 }
 
 /*! This private function writes the current value of a register (as stored in the
  *  _reg array) out to the register in the chip.
  */
 void MCP23S17::writeRegister(uint8_t addr) {
-    if (addr > 21) {
-        return;
-    }
-    uint8_t cmd = 0b01000000 | ((_addr & 0b111) << 1);
-    ::digitalWrite(_cs, LOW);
-    _spi->transfer(cmd);
-    _spi->transfer(addr);
-    _spi->transfer(_reg[addr]);
-    ::digitalWrite(_cs, HIGH);
+  if (addr > 21) {
+    return;
+  }
+  uint8_t cmd = 0b01000000 | ((_addr & 0b111) << 1);
+  _spi->beginTransaction(spiSettings);
+  ::digitalWrite(_cs, LOW);
+  _spi->transfer(cmd);
+  _spi->transfer(addr);
+  _spi->transfer(_reg[addr]);
+  ::digitalWrite(_cs, HIGH);
+  _spi->endTransaction();
 }
 
 /*! This private function performs a bulk read on all the registers in the chip to
  *  ensure the _reg array contains all the correct current values.
  */
 void MCP23S17::readAll() {
-    uint8_t cmd = 0b01000001 | ((_addr & 0b111) << 1);
-    ::digitalWrite(_cs, LOW);
-    _spi->transfer(cmd);
-    _spi->transfer(0);
-    for (uint8_t i = 0; i < 22; i++) {
-        _reg[i] = _spi->transfer(0xFF);
-    }
-    ::digitalWrite(_cs, HIGH);
+  uint8_t cmd = 0b01000001 | ((_addr & 0b111) << 1);
+  _spi->beginTransaction(spiSettings);
+  ::digitalWrite(_cs, LOW);
+  _spi->transfer(cmd);
+  _spi->transfer(0);
+  for (uint8_t i = 0; i < 22; i++) {
+    _reg[i] = _spi->transfer(0xFF);
+  }
+  ::digitalWrite(_cs, HIGH);
+  _spi->endTransaction();
 }
 
 /*! This private function performs a bulk write of all the data in the _reg array
@@ -181,16 +190,18 @@ void MCP23S17::readAll() {
  *  of the chip.
  */
 void MCP23S17::writeAll() {
-    uint8_t cmd = 0b01000000 | ((_addr & 0b111) << 1);
-    ::digitalWrite(_cs, LOW);
-    _spi->transfer(cmd);
-    _spi->transfer(0);
-    for (uint8_t i = 0; i < 22; i++) {
-        _spi->transfer(_reg[i]);
-    }
-    ::digitalWrite(_cs, HIGH);
+  uint8_t cmd = 0b01000000 | ((_addr & 0b111) << 1);
+  _spi->beginTransaction(spiSettings);
+  ::digitalWrite(_cs, LOW);
+  _spi->transfer(cmd);
+  _spi->transfer(0);
+  for (uint8_t i = 0; i < 22; i++) {
+    _spi->transfer(_reg[i]);
+  }
+  ::digitalWrite(_cs, HIGH);
+  _spi->endTransaction();
 }
-    
+
 /*! Just like the pinMode() function of the Arduino API, this function sets the
  *  direction of the pin.  The first parameter is the pin nimber (0-15) to use,
  *  and the second parameter is the direction of the pin.  There are standard
@@ -207,35 +218,35 @@ void MCP23S17::writeAll() {
  *      myExpander.pinMode(5, INPUT_PULLUP);
  */
 void MCP23S17::pinMode(uint8_t pin, uint8_t mode) {
-    if (pin >= 16) {
-        return;
-    }
-    uint8_t dirReg = MCP_IODIRA;
-    uint8_t puReg = MCP_GPPUA;
-    if (pin >= 8) {
-        pin -= 8;
-        dirReg = MCP_IODIRB;
-        puReg = MCP_GPPUB;
-    }
+  if (pin >= 16) {
+    return;
+  }
+  uint8_t dirReg = MCP_IODIRA;
+  uint8_t puReg = MCP_GPPUA;
+  if (pin >= 8) {
+    pin -= 8;
+    dirReg = MCP_IODIRB;
+    puReg = MCP_GPPUB;
+  }
 
-    switch (mode) {
-        case OUTPUT:
-            _reg[dirReg] &= ~(1<<pin);
-            writeRegister(dirReg);
-            break;
+  switch (mode) {
+    case OUTPUT:
+      _reg[dirReg] &= ~(1 << pin);
+      writeRegister(dirReg);
+      break;
 
-        case INPUT:
-        case INPUT_PULLUP:
-            _reg[dirReg] |= (1<<pin);
-            writeRegister(dirReg);
-            if (mode == INPUT_PULLUP) {
-                _reg[puReg] |= (1<<pin);
-            } else {
-                _reg[puReg] &= ~(1<<pin);
-            }
-            writeRegister(puReg);
-            break;
-    }
+    case INPUT:
+    case INPUT_PULLUP:
+      _reg[dirReg] |= (1 << pin);
+      writeRegister(dirReg);
+      if (mode == INPUT_PULLUP) {
+        _reg[puReg] |= (1 << pin);
+      } else {
+        _reg[puReg] &= ~(1 << pin);
+      }
+      writeRegister(puReg);
+      break;
+  }
 }
 
 /*! Like the Arduino API's namesake, this function will set an output pin to a specific
@@ -249,42 +260,42 @@ void MCP23S17::pinMode(uint8_t pin, uint8_t mode) {
  *      myExpander.digitalWrite(3, HIGH);
  */
 void MCP23S17::digitalWrite(uint8_t pin, uint8_t value) {
-    if (pin >= 16) {
-        return;
-    }
-    uint8_t dirReg = MCP_IODIRA;
-    uint8_t puReg = MCP_GPPUA;
-    uint8_t latReg = MCP_OLATA;
-    if (pin >= 8) {
-        pin -= 8;
-        dirReg = MCP_IODIRB;
-        puReg = MCP_GPPUB;
-        latReg = MCP_OLATB;
-    }
+  if (pin >= 16) {
+    return;
+  }
+  uint8_t dirReg = MCP_IODIRA;
+  uint8_t puReg = MCP_GPPUA;
+  uint8_t latReg = MCP_OLATA;
+  if (pin >= 8) {
+    pin -= 8;
+    dirReg = MCP_IODIRB;
+    puReg = MCP_GPPUB;
+    latReg = MCP_OLATB;
+  }
 
-    uint8_t mode = (_reg[dirReg] & (1<<pin)) == 0 ? OUTPUT : INPUT;
-    
-    switch (mode) {
-        case OUTPUT:
-            if (value == 0) {
-                _reg[latReg] &= ~(1<<pin);
-            } else {
-                _reg[latReg] |= (1<<pin);
-            }
-            writeRegister(latReg);
-            break;
+  uint8_t mode = (_reg[dirReg] & (1 << pin)) == 0 ? OUTPUT : INPUT;
 
-        case INPUT:
-            if (value == 0) {
-                _reg[puReg] &= ~(1<<pin);
-            } else {
-                _reg[puReg] |= (1<<pin);
-            }
-            writeRegister(puReg);
-            break;
-    }
+  switch (mode) {
+    case OUTPUT:
+      if (value == 0) {
+        _reg[latReg] &= ~(1 << pin);
+      } else {
+        _reg[latReg] |= (1 << pin);
+      }
+      writeRegister(latReg);
+      break;
+
+    case INPUT:
+      if (value == 0) {
+        _reg[puReg] &= ~(1 << pin);
+      } else {
+        _reg[puReg] |= (1 << pin);
+      }
+      writeRegister(puReg);
+      break;
+  }
 }
-    
+
 /*! This will return the current state of a pin set to INPUT, or the last
  *  value written to a pin set to OUTPUT.
  *
@@ -293,29 +304,29 @@ void MCP23S17::digitalWrite(uint8_t pin, uint8_t value) {
  *      byte value = myExpander.digitalRead(4);
  */
 uint8_t MCP23S17::digitalRead(uint8_t pin) {
-    if (pin >= 16) {
-        return 0;
-    }
-    uint8_t dirReg = MCP_IODIRA;
-    uint8_t portReg = MCP_GPIOA;
-    uint8_t latReg = MCP_OLATA;
-    if (pin >= 8) {
-        pin -= 8;
-        dirReg = MCP_IODIRB;
-        portReg = MCP_GPIOB;
-        latReg = MCP_OLATB;
-    }
-
-    uint8_t mode = (_reg[dirReg] & (1<<pin)) == 0 ? OUTPUT : INPUT;
-
-    switch (mode) {
-        case OUTPUT: 
-            return _reg[latReg] & (1<<pin) ? HIGH : LOW;
-        case INPUT:
-            readRegister(portReg);
-            return _reg[portReg] & (1<<pin) ? HIGH : LOW;
-    }
+  if (pin >= 16) {
     return 0;
+  }
+  uint8_t dirReg = MCP_IODIRA;
+  uint8_t portReg = MCP_GPIOA;
+  uint8_t latReg = MCP_OLATA;
+  if (pin >= 8) {
+    pin -= 8;
+    dirReg = MCP_IODIRB;
+    portReg = MCP_GPIOB;
+    latReg = MCP_OLATB;
+  }
+
+  uint8_t mode = (_reg[dirReg] & (1 << pin)) == 0 ? OUTPUT : INPUT;
+
+  switch (mode) {
+    case OUTPUT:
+      return _reg[latReg] & (1 << pin) ? HIGH : LOW;
+    case INPUT:
+      readRegister(portReg);
+      return _reg[portReg] & (1 << pin) ? HIGH : LOW;
+  }
+  return 0;
 }
 
 /*! This function returns the entire 8-bit value of a GPIO port.  Note that
@@ -328,13 +339,13 @@ uint8_t MCP23S17::digitalRead(uint8_t pin) {
  *      byte portA = myExpander.readPort(0);
  */
 uint8_t MCP23S17::readPort(uint8_t port) {
-    if (port == 0) {
-        readRegister(MCP_GPIOA);
-        return _reg[MCP_GPIOA];
-    } else {
-        readRegister(MCP_GPIOB);
-        return _reg[MCP_GPIOB];
-    }
+  if (port == 0) {
+    readRegister(MCP_GPIOA);
+    return _reg[MCP_GPIOA];
+  } else {
+    readRegister(MCP_GPIOB);
+    return _reg[MCP_GPIOB];
+  }
 }
 
 /*! This is a full 16-bit version of the parameterised readPort function.  This
@@ -346,9 +357,9 @@ uint8_t MCP23S17::readPort(uint8_t port) {
  *      unsigned int value = myExpander.readPort();
  */
 uint16_t MCP23S17::readPort() {
-    readRegister(MCP_GPIOA);
-    readRegister(MCP_GPIOB);
-    return (_reg[MCP_GPIOB] << 8) | _reg[MCP_GPIOA];
+  readRegister(MCP_GPIOA);
+  readRegister(MCP_GPIOB);
+  return (_reg[MCP_GPIOB] << 8) | _reg[MCP_GPIOA];
 }
 
 /*! This writes an 8-bit value to one of the two IO port banks (A/B) on the chip.
@@ -361,13 +372,13 @@ uint16_t MCP23S17::readPort() {
  *      myExpander.writePort(0, 0x55);
  */
 void MCP23S17::writePort(uint8_t port, uint8_t val) {
-    if (port == 0) {
-        _reg[MCP_OLATA] = val;
-        writeRegister(MCP_OLATA);
-    } else {
-        _reg[MCP_OLATB] = val;
-        writeRegister(MCP_OLATB);
-    }
+  if (port == 0) {
+    _reg[MCP_OLATA] = val;
+    writeRegister(MCP_OLATA);
+  } else {
+    _reg[MCP_OLATB] = val;
+    writeRegister(MCP_OLATB);
+  }
 }
 
 /*! This is the 16-bit version of the writePort function.  This takes a single
@@ -379,10 +390,10 @@ void MCP23S17::writePort(uint8_t port, uint8_t val) {
  *      myExpander.writePort(0x55AA);
  */
 void MCP23S17::writePort(uint16_t val) {
-    _reg[MCP_OLATB] = val >> 8;
-    _reg[MCP_OLATA] = val & 0xFF;
-    writeRegister(MCP_OLATA);
-    writeRegister(MCP_OLATB);
+  _reg[MCP_OLATB] = val >> 8;
+  _reg[MCP_OLATA] = val & 0xFF;
+  writeRegister(MCP_OLATA);
+  writeRegister(MCP_OLATB);
 }
 
 /*! This enables the interrupt functionality of a pin.  The interrupt type can be one of:
@@ -396,44 +407,44 @@ void MCP23S17::writePort(uint16_t val) {
  *  captured port status at the time of the interrupt is read using getInterruptValue.
  *
  *  Example:
- * 
+ *
  *      myExpander.enableInterrupt(4, RISING);
  */
 void MCP23S17::enableInterrupt(uint8_t pin, uint8_t type) {
-    if (pin >= 16) {
-        return;
-    }
-    uint8_t intcon = MCP_INTCONA;
-    uint8_t defval = MCP_DEFVALA;
-    uint8_t gpinten = MCP_GPINTENA;
+  if (pin >= 16) {
+    return;
+  }
+  uint8_t intcon = MCP_INTCONA;
+  uint8_t defval = MCP_DEFVALA;
+  uint8_t gpinten = MCP_GPINTENA;
 
-    if (pin >= 8) {
-        pin -= 8;
-        intcon = MCP_INTCONB;
-        defval = MCP_DEFVALB;
-        gpinten = MCP_GPINTENB;
-    }
+  if (pin >= 8) {
+    pin -= 8;
+    intcon = MCP_INTCONB;
+    defval = MCP_DEFVALB;
+    gpinten = MCP_GPINTENB;
+  }
 
-    switch (type) {
-        case CHANGE:
-            _reg[intcon] &= ~(1<<pin);
-            break;
-        case RISING:
-            _reg[intcon] |= (1<<pin);
-            _reg[defval] &= ~(1<<pin);
-            break;
-        case FALLING:
-            _reg[intcon] |= (1<<pin);
-            _reg[defval] |= (1<<pin);
-            break;
+  switch (type) {
+    case CHANGE:
+      _reg[intcon] &= ~(1 << pin);
+      break;
+    case RISING:
+      _reg[intcon] |= (1 << pin);
+      _reg[defval] &= ~(1 << pin);
+      break;
+    case FALLING:
+      _reg[intcon] |= (1 << pin);
+      _reg[defval] |= (1 << pin);
+      break;
 
-    }
+  }
 
-    _reg[gpinten] |= (1<<pin);
+  _reg[gpinten] |= (1 << pin);
 
-    writeRegister(intcon);
-    writeRegister(defval);
-    writeRegister(gpinten);
+  writeRegister(intcon);
+  writeRegister(defval);
+  writeRegister(gpinten);
 }
 
 /*! This disables the interrupt functionality of a pin.
@@ -443,23 +454,23 @@ void MCP23S17::enableInterrupt(uint8_t pin, uint8_t type) {
  *      myExpander.disableInterrupt(4);
  */
 void MCP23S17::disableInterrupt(uint8_t pin) {
-    if (pin >= 16) {
-        return;
-    }
-    uint8_t gpinten = MCP_GPINTENA;
+  if (pin >= 16) {
+    return;
+  }
+  uint8_t gpinten = MCP_GPINTENA;
 
-    if (pin >= 8) {
-        pin -= 8;
-        gpinten = MCP_GPINTENB;
-    }
+  if (pin >= 8) {
+    pin -= 8;
+    gpinten = MCP_GPINTENB;
+  }
 
-    _reg[gpinten] &= ~(1<<pin);
-    writeRegister(gpinten);
+  _reg[gpinten] &= ~(1 << pin);
+  writeRegister(gpinten);
 }
 
 /*! The two IO banks can have their INT pins connected together.
  *  This enables you to monitor both banks with just one interrupt pin
- *  on the host microcontroller.  Calling setMirror with a parameter of 
+ *  on the host microcontroller.  Calling setMirror with a parameter of
  *  *true* will enable this feature.  Calling it with *false* will disable
  *  it.
  *
@@ -468,14 +479,14 @@ void MCP23S17::disableInterrupt(uint8_t pin) {
  *      myExpander.setMirror(true);
  */
 void MCP23S17::setMirror(boolean m) {
-    if (m) {
-        _reg[MCP_IOCONA] |= (1<<6);
-        _reg[MCP_IOCONB] |= (1<<6);
-    } else {
-        _reg[MCP_IOCONA] &= ~(1<<6);
-        _reg[MCP_IOCONB] &= ~(1<<6);
-    }
-    writeRegister(MCP_IOCONA);
+  if (m) {
+    _reg[MCP_IOCONA] |= (1 << 6);
+    _reg[MCP_IOCONB] |= (1 << 6);
+  } else {
+    _reg[MCP_IOCONA] &= ~(1 << 6);
+    _reg[MCP_IOCONB] &= ~(1 << 6);
+  }
+  writeRegister(MCP_IOCONA);
 }
 
 /*! This function returns a 16-bit bitmap of the the pin or pins that have cause an interrupt to fire.
@@ -485,10 +496,10 @@ void MCP23S17::setMirror(boolean m) {
  *      unsigned int pins = myExpander.getInterruptPins();
  */
 uint16_t MCP23S17::getInterruptPins() {
-    readRegister(MCP_INTFA);
-    readRegister(MCP_INTFB);
+  readRegister(MCP_INTFA);
+  readRegister(MCP_INTFB);
 
-    return (_reg[MCP_INTFB] << 8) | _reg[MCP_INTFA];
+  return (_reg[MCP_INTFB] << 8) | _reg[MCP_INTFA];
 }
 
 /*! This returns a snapshot of the IO pin states at the moment the last interrupt occured.  Reading
@@ -501,11 +512,11 @@ uint16_t MCP23S17::getInterruptPins() {
  *      unsigned int pinValues = myExpander.getInterruptValue();
  */
 uint16_t MCP23S17::getInterruptValue() {
-    readRegister(MCP_INTCAPA);
-    readRegister(MCP_INTCAPB);
+  readRegister(MCP_INTCAPA);
+  readRegister(MCP_INTCAPB);
 
-    return (_reg[MCP_INTCAPB] << 8) | _reg[MCP_INTCAPA];
-} 
+  return (_reg[MCP_INTCAPB] << 8) | _reg[MCP_INTCAPA];
+}
 
 /*! This sets the "active" level for an interrupt.  HIGH means the interrupt pin
  *  will go HIGH when an interrupt occurs, LOW means it will go LOW.
@@ -515,14 +526,14 @@ uint16_t MCP23S17::getInterruptValue() {
  *      myExpander.setInterruptLevel(HIGH);
  */
 void MCP23S17::setInterruptLevel(uint8_t level) {
-    if (level == LOW) {
-        _reg[MCP_IOCONA] &= ~(1<<1);
-        _reg[MCP_IOCONB] &= ~(1<<1);
-    } else {
-        _reg[MCP_IOCONA] |= (1<<1);
-        _reg[MCP_IOCONB] |= (1<<1);
-    }
-    writeRegister(MCP_IOCONA);
+  if (level == LOW) {
+    _reg[MCP_IOCONA] &= ~(1 << 1);
+    _reg[MCP_IOCONB] &= ~(1 << 1);
+  } else {
+    _reg[MCP_IOCONA] |= (1 << 1);
+    _reg[MCP_IOCONB] |= (1 << 1);
+  }
+  writeRegister(MCP_IOCONA);
 }
 
 /*! Using this function it is possible to configure the interrupt output pins to be open
@@ -535,14 +546,14 @@ void MCP23S17::setInterruptLevel(uint8_t level) {
  *      myExpander.setInterruptOD(true);
  */
 void MCP23S17::setInterruptOD(boolean openDrain) {
-    if (openDrain) {
-        _reg[MCP_IOCONA] |= (1<<2);
-        _reg[MCP_IOCONB] |= (1<<2);
-    } else {
-        _reg[MCP_IOCONA] &= ~(1<<2);
-        _reg[MCP_IOCONB] &= ~(1<<2);
-    }
-    writeRegister(MCP_IOCONA);
+  if (openDrain) {
+    _reg[MCP_IOCONA] |= (1 << 2);
+    _reg[MCP_IOCONB] |= (1 << 2);
+  } else {
+    _reg[MCP_IOCONA] &= ~(1 << 2);
+    _reg[MCP_IOCONB] &= ~(1 << 2);
+  }
+  writeRegister(MCP_IOCONA);
 }
 
 /*! This function returns an 8-bit bitmap of the Port-A pin or pins that have caused an interrupt to fire.
@@ -552,8 +563,8 @@ void MCP23S17::setInterruptOD(boolean openDrain) {
  *      unsigned int pins = myExpander.getInterruptAPins();
  */
 uint8_t MCP23S17::getInterruptAPins() {
-    readRegister(MCP_INTFA);
-    return  _reg[MCP_INTFA];
+  readRegister(MCP_INTFA);
+  return  _reg[MCP_INTFA];
 }
 
 /*! This returns a snapshot of the Port-A IO pin states at the moment the last interrupt occured.  Reading
@@ -566,9 +577,9 @@ uint8_t MCP23S17::getInterruptAPins() {
  *      unsigned int pinValues = myExpander.getInterruptAValue();
  */
 uint8_t MCP23S17::getInterruptAValue() {
-    readRegister(MCP_INTCAPA);
-    return _reg[MCP_INTCAPA];
-} 
+  readRegister(MCP_INTCAPA);
+  return _reg[MCP_INTCAPA];
+}
 
 /*! This function returns an 8-bit bitmap of the Port-B pin or pins that have caused an interrupt to fire.
  *
@@ -577,8 +588,8 @@ uint8_t MCP23S17::getInterruptAValue() {
  *      unsigned int pins = myExpander.getInterruptBPins();
  */
 uint8_t MCP23S17::getInterruptBPins() {
-    readRegister(MCP_INTFB);
-    return _reg[MCP_INTFB];
+  readRegister(MCP_INTFB);
+  return _reg[MCP_INTFB];
 }
 
 /*! This returns a snapshot of the Port-B IO pin states at the moment the last interrupt occured.  Reading
@@ -591,6 +602,6 @@ uint8_t MCP23S17::getInterruptBPins() {
  *      unsigned int pinValues = myExpander.getInterruptBValue();
  */
 uint8_t MCP23S17::getInterruptBValue() {
-    readRegister(MCP_INTCAPB);
-    return _reg[MCP_INTCAPB];
-} 
+  readRegister(MCP_INTCAPB);
+  return _reg[MCP_INTCAPB];
+}
